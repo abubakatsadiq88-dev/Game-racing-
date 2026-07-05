@@ -1,0 +1,67 @@
+import pygame
+import sys
+import math
+
+# Initialize Pygame
+pygame.init()
+
+# 
+        else:
+            # AI path following
+            self.speed = self.max_speed * 0.96
+            cx, cy = WIDTH // 2, HEIGHT // 2
+            dx = self.x - cx
+            dy = self.y - cy
+            target_angle = math.degrees(math.atan2(dy, dx)) + 85
+            angle_diff 
+        self.y += self.speed * math.sin(rad)
+
+        # Grass slowdown
+        if self.x < 130 or self.x > WIDTH - 130 or self.y < 130 or self.y > HEIGHT - 130:
+            self.speed *= 0.82
+
+    def draw(self, surface):
+        car_surf = pygame.Surface((self.width + 12, self.height + 12), pygame.SRCALPHA)
+        # Main body
+        pygame.draw.rect(car_surf, self.color, (6, 3, self.width, self.height - 6))
+        # Cabin / windows
+        pygame.draw.rect(car_surf, (70, 70, 110), (13, 6, 24, 9))
+        
+        rotated = pygame.transform.rotate(car_surf, -self.angle)
+        new_rect = rotated.get_rect(center=(int(self.x), int(self.y)))
+        surface.blit(rotated, new_rect.topleft)
+
+def draw_track(surface):
+    surface.fill(GRASS_COLOR)
+    # Main track
+    pygame.draw.circle(surface, TRACK_COLOR, (WIDTH//2, HEIGHT//2), 280, 125)
+    # Inner lines
+    for i in range(0, 360, 18):
+        angle = math.radians(i)
+        x1 = WIDTH//2 + 185 * math.cos(angle)
+        y1 = HEIGHT//2 + 95 * math.sin(angle)
+        x2 = WIDTH//2 + 315 * math.cos(angle)
+        y2 = HEIGHT//2 + 205 * math.sin(angle)
+        pygame.draw.line(surface, LINE_COLOR, (x1, y1), (x2, y2), 5)
+
+def main():
+    player = Car(WIDTH//2 - 160, HEIGHT//2 + 60, BLUE, True)
+    ai_cars = [
+        Car(WIDTH//2 - 110, HEIGHT//2 - 50, RED),
+        Car(WIDTH//2 - 90, HEIGHT//2 + 70, YELLOW),
+        Car(WIDTH//2 - 140, HEIGHT//2 - 110, GREEN)
+    ]
+    
+    running = True
+    start_time = pygame.time.get_ticks()
+    finish_laps = 3
+    game_over = False
+    winner = None
+
+    while running:
+        clock.tick(FPS)
+        keys = pygame.key.get_pressed()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running
